@@ -2,27 +2,24 @@ import { LogLayer } from "loglayer";
 import { pino } from "pino";
 import { PinoTransport } from "@loglayer/transport-pino";
 import { serializeError } from "serialize-error";
-import { join } from "path";
+
+const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+
+// Development: pretty-printed console output
+const devTransport = {
+  target: "pino-pretty",
+  level: "debug",
+  options: { colorize: true },
+};
+
+const fileTransport = {
+  target: 'pino/file',
+  options: { destination: process.env.LOG_FILE || './logs/app.log', mkdir: true }
+}
 
 const p = pino({
-  level: "trace", // Enable all log levels
-  transport: {
-    targets:[
-    {
-      target: 'pino-pretty',
-      level: 'info',
-      options: { colorize: true }
-    },
-    {
-      target: 'pino-roll',
-      level: 'info',
-      options: { 
-        file: join(process.cwd(), 'logs', 'app.log'),
-        mkdir: true 
-      }
-    }
-    ]
-  },
+  level: IS_DEVELOPMENT ? "debug" : "info",
+  transport: IS_DEVELOPMENT ? { targets: [devTransport] } : {targets: [devTransport,fileTransport] },
 });
 
 const log = new LogLayer({

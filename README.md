@@ -37,3 +37,11 @@ src/
 ├── env.ts          # Zod-validated environment
 ├── app.ts          # Hono app (routes wired here)
 └── index.ts        # Server entry point
+
+# New Project Checklist
+
+- [ ] Update `name` in `package.json`
+- [ ] Update `name` in `ecosystem.config.cjs`
+- [ ] Copy `.env.example` to `.env` and fill in values
+- [ ] Update `README.md` with project description
+- [ ] Delete this file

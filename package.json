@@ -1,5 +1,5 @@
 {
-  "name": "hold-api",
+  "name": "hono-api",
   "type": "module",
   "scripts": {
     "dev": "vite-node src/index.ts --watch",

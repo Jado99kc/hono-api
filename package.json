@@ -1,5 +1,7 @@
 {
-  "name": "hono-api",
+  "name": "my-hono-api",
+  "version": "0.0.1",
+  "description": "Hono API boilerplate with OpenAPI, Zod,LogLayer, and vite-node as build tool",
   "type": "module",
   "scripts": {
     "dev": "vite-node src/index.ts --watch",

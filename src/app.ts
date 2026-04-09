@@ -2,7 +2,7 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 import notFound from './middlewares/not-found'
 import onError from './middlewares/on-error'
 import { honoLogLayer } from '@loglayer/hono'
-import log from './utils/logger'
+import log from './lib/logger'
 
 const app = new OpenAPIHono()
 app.use(honoLogLayer({ instance: log }))

@@ -1,1 +1,1 @@
-pm2 start ./dist/index.js -i 2 --name hold-api
+pm2 start ecosystem.config.cjs --env production

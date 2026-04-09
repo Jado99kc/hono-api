@@ -2,8 +2,9 @@ import { LogLayer } from "loglayer";
 import { pino } from "pino";
 import { PinoTransport } from "@loglayer/transport-pino";
 import { serializeError } from "serialize-error";
+import { env } from "@/env";
 
-const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+const IS_DEVELOPMENT = env.NODE_ENV === "development";
 
 // Development: pretty-printed console output
 const devTransport = {
@@ -19,7 +20,10 @@ const fileTransport = {
 
 const p = pino({
   level: IS_DEVELOPMENT ? "debug" : "info",
-  transport: IS_DEVELOPMENT ? { targets: [devTransport] } : {targets: [devTransport,fileTransport] },
+  timestamp: pino.stdTimeFunctions.isoTime,
+  transport: IS_DEVELOPMENT
+    ? { targets: [devTransport] }
+    : { targets: [fileTransport] },
 });
 
 const log = new LogLayer({

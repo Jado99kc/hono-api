@@ -1,22 +1,23 @@
+import { env } from "@/env";
 import type { ErrorHandler } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 
-import { INTERNAL_SERVER_ERROR, OK } from "@/constants/http-status-codes";
+import { StatusCodes } from "http-status-codes";
 
 const onError: ErrorHandler = (err, c) => {
   const currentStatus = "status" in err
     ? err.status
     : c.newResponse(null).status;
-  const statusCode = currentStatus !== OK
+  const statusCode = currentStatus !== StatusCodes.OK
     ? (currentStatus as ContentfulStatusCode)
-    : INTERNAL_SERVER_ERROR;
+    : StatusCodes.INTERNAL_SERVER_ERROR;
   // eslint-disable-next-line node/prefer-global/process
-  const env = c.env?.NODE_ENV || process.env?.NODE_ENV;
+  const environment = env.NODE_ENV;
   return c.json(
     {
       message: err.message,
 
-      stack: env === "production"
+      stack: environment === "production"
         ? undefined
         : err.stack,
     },

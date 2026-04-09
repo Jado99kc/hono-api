@@ -1,13 +1,18 @@
 import "dotenv/config";
 import { serve } from "@hono/node-server";
 import app from "./app";
+import { env } from "./env";
+import log from "./lib/logger";
+
 
 serve(
   {
     fetch: app.fetch,
-    port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+    port: env.PORT,
   },
   (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
+    log.info(
+      `Server running on http://localhost:${info.port} [${env.NODE_ENV}]`,
+    );
   },
 );
